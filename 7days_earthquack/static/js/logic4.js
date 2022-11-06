@@ -37,14 +37,14 @@ let map = L.map('mapid', {
 })
 
 // Pass our map layers into our layers control and add the layers control to the map.
-L.control.layers(baseMaps).addTo(map);
+L.control.layers(baseMaps, overlays).addTo(map);
 
 // Retrieve the earthquake GeoJSON data.
 d3.json(quakeData).then(function(data) {
 
 // This function returns the style data for each of the earthquakes we plot on
-// the map. We pass the magnitude of the earthquake into a function
-// to calculate the radius.
+// the map. We pass the magnitude of the earthquake into two separate functions
+// to calculate the color and radius.
 function styleInfo(feature) {
   return {
     opacity: 1,
@@ -57,7 +57,7 @@ function styleInfo(feature) {
   };
 }
 
-/// This function determines the radius of the earthquake marker based on its magnitude.
+// This function determines the radius of the earthquake marker based on its magnitude.
 // Earthquakes with a magnitude of 0 will be plotted with a radius of 1.
 function getRadius(magnitude) {
   if (magnitude === 0) {
@@ -100,5 +100,8 @@ L.geoJSON(data, {
         onEachFeature: function(feature, layer) {
         layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
       }
-  }).addTo(map);
+  }).addTo(earthquakes);
+
+    // add the earthquake layer to the map
+    earthquakes.addTo(map);
   });
