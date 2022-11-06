@@ -130,6 +130,8 @@ legend.onAdd = function() {
       "<i style='background: " + colors[i] + "'></i> " +
       magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
   }
-  return div,
-  legend.addTo(map);
+
+  return div;
 };
+
+legend.addTo(map);
